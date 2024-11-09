@@ -1,5 +1,5 @@
 if __name__ == '__main__' :
-    print('\033cStarting ...\n')
+    print('\033cStarting ...\n') # Clear Terminal
 
 import csv
 import requests
