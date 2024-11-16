@@ -2,8 +2,11 @@ if __name__ == '__main__' :
     print('\033cStarting ...\n') # Clear Terminal
 
 import os
-import dotenv
+
 import discord
+import dotenv
+
+from GetResponse import get_response
 
 dotenv.load_dotenv()
 
@@ -18,20 +21,10 @@ async def send_message(message, user_message: str) -> None :
         return
 
     try :
-        response: str = get_response(user_message)
+        response, send_csv = get_response(user_message)
         await message.channel.send(response)
     except Exception as e:
         print(e)
-
-def get_response(user_input:str)->str :
-    lowered: str = user_input.lower()
-    if 'collecte' in lowered and 'jus' in lowered :
-        message = 'Voici le jus'
-        raise NotImplementedError #TODO lancer le getinfo et envoyer un message en plus du fichier
-    else :
-        message = 'kys'
-
-    return message
 
 @client.event
 async def on_ready() -> None:
@@ -48,8 +41,5 @@ async def on_message(message) -> None:
     print(f'[{channel}] {username}: "{user_message}"')
     await send_message(message, user_message)
 
-def main() -> None:
-    client.run(token=Discord_Token)
-
 if __name__ == '__main__':
-    main()
+    client.run(token=Discord_Token)

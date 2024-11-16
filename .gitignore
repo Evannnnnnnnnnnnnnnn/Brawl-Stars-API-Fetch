@@ -1,3 +1,4 @@
 .env
-Test.py
-Test3.py
+Test*.py
+**/__pycache__
+/.idea

@@ -2,13 +2,14 @@ if __name__ == '__main__' :
     print('\033cStarting ...\n') # Clear Terminal
 
 import csv
-import requests
-import sys
 import os
-from datetime import datetime
-from tqdm import tqdm
 import subprocess
+import sys
+from datetime import datetime
+
 import dotenv
+import requests
+from tqdm import tqdm
 
 Club_path = "C:\Trucs\Brawl Stars\Brawl Stars API Fetch"
 
@@ -49,13 +50,13 @@ else :
     with open(os.path.join(Club_path,'Club Member Infos.csv'), mode ='r', encoding="utf-8") as csv_file :
         Old_Club_csv = csv.reader(csv_file)
         Old_Club_List = []
-        for ligne in Old_Club_csv :
-            Old_Club_List.append(ligne)
+        for line in Old_Club_csv :
+            Old_Club_List.append(line)
     for i in Old_Club_List :
         if date == i[0] :
             #sys.exit('Already made Today')
             pass
-    # We check if there is enough data to do comparaison
+    # We check if there is enough data to do comparison
     check_counter = 0
     while check_counter != 2 :
         for i in range(len(Old_Club_List)) :
@@ -83,10 +84,10 @@ for member in tqdm(Infos_club['members'], desc = 'Getting info ') :
 
     Player_Tag = member['tag'].replace('#', '')
     api_url_player = f'https://api.brawlstars.com/v1/players/%23{Player_Tag}'
-    responce_player = requests.get(api_url_player, headers=headers)
-    if not responce_player.status_code == 200 :
-        sys.exit(f'Player {member['name']} : Error{responce_player.status_code}')
-    Infos_player = responce_player.json()
+    response_player = requests.get(api_url_player, headers=headers)
+    if not response_player.status_code == 200 :
+        sys.exit(f'Player {member['name']} : Error{response_player.status_code}')
+    Infos_player = response_player.json()
     Players_List.append(Infos_player)
     if len(Players_List[i]['brawlers']) > nb_of_brawlers :
         nb_of_brawlers = len(Players_List[i]['brawlers'])
