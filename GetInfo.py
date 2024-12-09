@@ -43,9 +43,9 @@ hour = datetime.now().strftime("%Hh %M")
 
 # We check the first csv
 if not os.path.exists(os.path.join(Club_path,'Club Member Infos.csv')):
+    enough_data = False
     with open(os.path.join(Club_path,'Club Member Infos.csv'), mode='w', newline='', encoding="utf-8") as csv_file :
         csv_writer = csv.writer(csv_file)
-        enough_data = False
 else :
     with open(os.path.join(Club_path,'Club Member Infos.csv'), mode ='r', encoding="utf-8") as csv_file :
         Old_Club_csv = csv.reader(csv_file)
@@ -109,7 +109,7 @@ for player in Players_List :
         break
 
 # We add the brawlers to the header of the csv
-csv_list = ['Date', 'Rang', 'Nom', 'Role', 'Ancienneté', 'Trophés', 'Mégapig Fait', 'Tickets Utilisés','Player Tag', '3v3 Win', 'Solo Win', 'Duo Win', 'Tot Exp', 'Max Trophés']
+csv_list = ['Date', 'Rang', 'Nom', 'Role', 'Ancienneté', 'Trophées', 'Mégapig Fait', 'Tickets Utilisés','Player Tag', '3v3 Win', 'Solo Win', 'Duo Win', 'Tot Exp', 'Max Trophées']
 for brawler in Brawlers_List :
     csv_list.append(brawler)
 
