@@ -16,15 +16,19 @@ Club_path = "C:\Trucs\Brawl Stars\Brawl Stars API Fetch"
 dotenv.load_dotenv()
 
 #Check current Wifi
-wifi2 = 'Upper_Limb_Exo'
-wifi3 = 'ASK4-UWE-2'
-if wifi2 in str(subprocess.check_output("netsh wlan show interfaces")) :
-    print(f'Connected to {wifi2}\n')
-    api_key = os.getenv('API_KEY_1')
-elif wifi3 in str(subprocess.check_output("netsh wlan show interfaces")):
-    print(f'Connected to {wifi3}\n')
-    api_key = os.getenv('API_KEY_2')
-else : sys.exit("Not connected to correct Wifi")
+WIFIs = ['Chargement...']
+
+current_wifi = str(subprocess.check_output("netsh wlan show interfaces"))
+connected = False
+for wifi in WIFIs :
+    if wifi in  current_wifi:
+        print(f'Connected to {wifi}\n')
+        api_key = os.getenv(wifi)
+        connected = True
+        break
+    else : continue
+
+if not connected : sys.exit("Not connected to correct Wifi")
 
 # For API
 Club_Tag = '2CURLUUGQ'
