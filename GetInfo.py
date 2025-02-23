@@ -1,5 +1,5 @@
 if __name__ == '__main__' :
-    print('\033cStarting ...\n') # Clear Terminal
+    print('\nStarting ...\n') # Clear Terminal
 
 import csv
 import os
@@ -7,16 +7,16 @@ import subprocess
 import sys
 from datetime import datetime
 
-import dotenv
+import dotenv # python-dotenv
 import requests
 from tqdm import tqdm
 
-Club_path = "C:\Trucs\Brawl Stars\Brawl Stars API Fetch"
+Club_path = "E:\Jutage\Brawl Stars API Fetch"
 
 dotenv.load_dotenv()
 
 #Check current Wifi
-WIFIs = ['Chargement...']
+WIFIs = ['Chargement...', 'Freebox-31AE69']
 
 current_wifi = str(subprocess.check_output("netsh wlan show interfaces"))
 connected = False
@@ -58,7 +58,7 @@ else :
             Old_Club_List.append(line)
     for i in Old_Club_List :
         if date == i[0] :
-            #sys.exit('Already made Today')
+            sys.exit('Already made Today')
             pass
     # We check if there is enough data to do comparison
     check_counter = 0
@@ -79,18 +79,13 @@ Club_List = []
 Players_List = []
 
 for member in tqdm(Infos_club['members'], desc = 'Getting info ') :
-
-
-
     Club_List.append([date + ' - '+hour, i+1, member['name'], member['role'], date, member['trophies'], 0, 0, member['tag']])
-
-
 
     Player_Tag = member['tag'].replace('#', '')
     api_url_player = f'https://api.brawlstars.com/v1/players/%23{Player_Tag}'
     response_player = requests.get(api_url_player, headers=headers)
     if not response_player.status_code == 200 :
-        sys.exit(f'Player {member['name']} : Error{response_player.status_code}')
+        print(f'Player {member['name']} : Error{response_player.status_code}')
     Infos_player = response_player.json()
     Players_List.append(Infos_player)
     if len(Players_List[i]['brawlers']) > nb_of_brawlers :
@@ -136,7 +131,6 @@ if not enough_data :
         csv_writer.writerow(csv_list)
         csv_writer.writerows(Club_List)
     sys.exit(0)
-
 
 
 
