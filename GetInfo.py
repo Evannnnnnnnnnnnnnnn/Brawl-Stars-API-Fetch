@@ -1,6 +1,3 @@
-if __name__ == '__main__' :
-    print('\nStarting ...\n') # Clear Terminal
-
 import csv
 import os
 import subprocess
@@ -11,12 +8,11 @@ import dotenv # python-dotenv
 import requests
 from tqdm import tqdm
 
-Club_path = "E:\Jutage\Brawl Stars API Fetch"
+Club_path = os.getcwd() # Ou il y a le .csv
+Club_Tag = '2CURLUUGQ'
+WIFIs = ['Chargement...', 'Freebox-31AE69', 'SFR_7C1F']
 
 dotenv.load_dotenv()
-
-#Check current Wifi
-WIFIs = ['Chargement...', 'Freebox-31AE69']
 
 current_wifi = str(subprocess.check_output("netsh wlan show interfaces"))
 connected = False
@@ -28,10 +24,8 @@ for wifi in WIFIs :
         break
     else : continue
 
-if not connected : sys.exit("Not connected to correct Wifi")
-
-# For API
-Club_Tag = '2CURLUUGQ'
+if not connected :
+    sys.exit("Not connected to correct Wifi")
 
 api_url_club = f'https://api.brawlstars.com/v1/clubs/%23{Club_Tag}'
 
@@ -57,7 +51,7 @@ else :
         for line in Old_Club_csv :
             Old_Club_List.append(line)
     for i in Old_Club_List :
-        if date == i[0] :
+        if date in i[0] :
             sys.exit('Already made Today')
             pass
     # We check if there is enough data to do comparison
